@@ -1,5 +1,8 @@
-FROM python:3
-ADD . /code
-WORKDIR /code
-RUN pip install -r r.txt
-CMD gunicorn -b 127.0.0.1:5000 wsgi:app
+FROM python:3.6
+RUN mkdir -p /home/code
+ADD . /home/code
+WORKDIR /home/code/container
+RUN pip install -r r.txt -i https://pypi.douban.com/simple
+EXPOSE 5000
+EXPOSE 80
+CMD gunicorn -b 0.0.0.0 wsgi:app
